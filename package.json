@@ -1,0 +1,18 @@
+{
+    "name": "blazor-test-project",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "dotnet run --project BlazorApp/BlazorApp.csproj",
+        "prepare": "husky install",
+        "format": "bunx prettier --write \"**/*.{json,js,css,html}\"",
+        "format:check": "bunx prettier --check \"**/*.{json,js,css,html}\""
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^18.4.3",
+        "@commitlint/config-conventional": "^18.4.3",
+        "husky": "^8.0.3",
+        "prettier": "^3.2.5"
+    }
+}
