@@ -7,12 +7,20 @@
         "start": "dotnet run --project BlazorApp/BlazorApp.csproj",
         "prepare": "husky install",
         "format": "bunx prettier --write \"**/*.{json,js,css,html}\"",
-        "format:check": "bunx prettier --check \"**/*.{json,js,css,html}\""
+        "format:check": "bunx prettier --check \"**/*.{json,js,css,html}\"",
+        "commit": "git-cz"
     },
     "devDependencies": {
         "@commitlint/cli": "^18.4.3",
         "@commitlint/config-conventional": "^18.4.3",
         "husky": "^8.0.3",
-        "prettier": "^3.2.5"
+        "prettier": "^3.2.5",
+        "commitizen": "^4.3.0",
+        "cz-conventional-changelog": "^3.3.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }

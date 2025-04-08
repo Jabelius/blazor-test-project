@@ -93,5 +93,7 @@ nupkg/
 *.sln
 *.sw?
 
-# Bun
+# Package manager files
+package-lock.json
+bun.lock
 bun.lockb 
