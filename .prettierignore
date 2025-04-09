@@ -1,6 +1,19 @@
-bin/
-obj/
+# Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Node
 node_modules/
+package-lock.json
+yarn.lock
+
+# Misc
+.DS_Store
+Thumbs.db
+
 *.min.js
 *.min.css
 wwwroot/lib/ 

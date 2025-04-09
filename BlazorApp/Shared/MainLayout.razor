@@ -1,0 +1,61 @@
+@inherits LayoutComponentBase
+
+@code {
+  private class AsideItem
+  {
+    public string Title { get; set; } = "";
+    public string Description { get; set; } = "";
+    public double Price { get; set; } = 0;
+    public int Weight { get; set; } = 0;
+  }
+
+  private AsideItem[] asideItems = new[] {
+new AsideItem { Title = "Aside Item 1", Description = "Small description of the item", Price = 99.56, Weight = 1000 },
+new AsideItem { Title = "Aside Item 2", Description = "Small brief", Price = 54.11, Weight = 200 },
+new AsideItem { Title = "Aside Item 3", Description = "Third item", Price = 12.34, Weight = 30 }
+};
+}
+
+<div class="flex flex-col sm:flex-row items-stretch gap-4 max-w-screen-xl mx-auto my-4 px-4 xl:px-0">
+
+  <div class="hidden lg:block w-full">
+    <div class="p-4 bg-white rounded-lg border border-gray-200">
+      @foreach (var item in asideItems)
+      {
+        <a class="block px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-all duration-200" href="#">
+          <span class="text-gray-900 font-medium flex flex-row gap-1 justify-between">
+            <span>@item.Title</span>
+            <span>@item.Price €</span>
+          </span>
+          <span class="text-gray-500 text-xs mt-1 flex flex-row gap-1">
+            <span class="shrink-0">@item.Description</span>
+            <span class="border-b border-dotted border-gray-300 w-full transform -translate-y-[2px]"></span>
+            <span class="font-bold shrink-0">@(item.Weight >= 1000 ? $"{item.Weight / 1000}kg" : $"{item.Weight}g")</span>
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+
+  <main class="w-full sm:w-7/12 lg:w-5/12 shrink-0 bg-white rounded-lg border border-gray-200">
+    @Body
+  </main>
+
+  <div class="w-full">
+    <div class="grid grid-cols-1 gap-4 uppercase">
+      <div class="p-4 bg-white rounded-lg border border-gray-200">
+        <a href="#"
+          class="block px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-all duration-200 font-bold">Tags</a>
+        <a href="#"
+          class="block px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-all duration-200 font-bold">Groups</a>
+      </div>
+      <div class="p-4 bg-white rounded-lg border border-gray-200">
+        <a href="#"
+          class="block px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-all duration-200 font-bold">Link 1</a>
+        <a href="#"
+          class="block px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-all duration-200 font-bold">Link 2</a>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,37 @@
+{
+  "dotnet.defaultSolution": "BlazorApp.sln",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always",
+    "source.fixAll.eslint": "always"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "tailwindCSS.includeLanguages": {
+    "razor": "html",
+    "cshtml": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["class=\"([^\"]*)", "(?:class=\")(.*?)(?:\")"],
+    ["className=\"([^\"]*)", "(?:className=\")(.*?)(?:\")"]
+  ],
+  "[csharp]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  }
+}

@@ -1,0 +1,213 @@
+@page "/"
+@using BlazorApp.Models
+@inject IJSRuntime JSRuntime
+
+@code {
+
+  private SubItem defaultSubItem = new SubItem
+  {
+    Name = "SubItem",
+    Description = "SubItem Description",
+    Price = 0.99,
+    Weight = 67
+  };
+
+  private Item defaultItem = new Item();
+  private List<Item> items = new List<Item> {};
+
+  protected override void OnInitialized()
+  {
+    defaultItem = new Item
+    {
+      Name = "Item",
+      Description = "Description",
+      Price = 100,
+      SubItems = new List<SubItem> { new SubItem
+        {
+          Name = defaultSubItem.Name,
+          Description = defaultSubItem.Description,
+          Price = defaultSubItem.Price,
+          Weight = defaultSubItem.Weight
+        }
+      }
+    };
+
+    items.Add(new Item
+    {
+      Name = "Item 1",
+      Description = "Description 1",
+      Price = 100,
+      SubItems = new List<SubItem> { new SubItem
+        {
+          Name = defaultSubItem.Name,
+          Description = defaultSubItem.Description,
+          Price = defaultSubItem.Price,
+          Weight = defaultSubItem.Weight
+        }
+      }
+    });
+    items.Add(new Item
+    {
+      Name = "Item 2",
+      Description = "Description 2",
+      Price = 200,
+      SubItems = new List<SubItem> { new SubItem
+        {
+          Name = defaultSubItem.Name,
+          Description = defaultSubItem.Description,
+          Price = defaultSubItem.Price,
+          Weight = defaultSubItem.Weight
+        }
+      }
+    });
+    items.Add(new Item
+    {
+      Name = "Item 3",
+      Description = "Description 3",
+      Price = 300,
+      SubItems = new List<SubItem> { new SubItem
+        {
+          Name = defaultSubItem.Name,
+          Description = defaultSubItem.Description,
+          Price = defaultSubItem.Price,
+          Weight = defaultSubItem.Weight
+        }
+      }
+    });
+  }
+
+  private void AddItem()
+  {
+    items.Add(defaultItem);
+  }
+
+  private async Task RemoveItem(Item item)
+  {
+    // Confirmation dialog
+    var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to remove this item? ({item.Name})");
+    if (confirmed)
+    {
+      items.Remove(item);
+    }
+  }
+
+  private void AddSubItem(Item item)
+  {
+    item.SubItems.Add(new SubItem
+    {
+      Name = defaultSubItem.Name,
+      Description = defaultSubItem.Description,
+      Price = defaultSubItem.Price,
+      Weight = defaultSubItem.Weight
+    });
+  }
+
+  private async Task RemoveSubItem(Item item, SubItem subItem)
+  {
+    // Confirmation dialog
+    var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to remove this subitem? ({subItem.Name})");
+    if (confirmed)
+    {
+      item.SubItems.Remove(subItem);
+    }
+  }
+
+  private void ChangeItemName(Item item, string name)
+  {
+    item.Name = name;
+  }
+
+  private void ChangeItemDescription(Item item, string description)
+  {
+    item.Description = description;
+  }
+
+  private void ChangeSubItemName(SubItem subItem, string name)
+  {
+    subItem.Name = name;
+  }
+
+  private void ChangeSubItemPrice(SubItem subItem, double price)
+  {
+    subItem.Price = price;
+  }
+
+  private void ChangeSubItemWeight(SubItem subItem, double weight)
+  {
+    subItem.Weight = (int)weight;
+  } 
+}
+
+<div class="container mx-auto px-8 py-8">
+  <div class="flex items-stretch gap-8">
+    <div class="w-full md:w-1/2">
+      <h1 class="text-2xl font-bold">Main title</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, blanditiis
+        explicabo dicta quam veritatis nemo aliquid laboriosam. Esse officiis minus voluptate,
+        blanditiis, mollitia error neque dolorem dolor necessitatibus architecto atque.
+      </p>
+    </div>
+    <div class="w-full md:w-1/2">
+      <img src="https://placehold.co/600x400" alt="Placeholder" class="rounded-lg object-cover h-full w-full block" />
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto px-8 py-8">
+  <div class="flex flex-col gap-4">
+    <h2 class="text-2xl font-bold">Subtitle</h2>
+    <div class="add-or-remove-items grid grid-cols-1 gap-4">
+      @foreach (var item in items)
+      {
+        <div class="grid gap-2 rounded-md border-2 border-gray-300 p-4">
+          <label>
+            <span class="text-sm uppercase mb-1 font-bold block"><i class="fas fa-tag mr-2"></i>Name</span>
+            <input class="text-lg font-bold border p-2 rounded-md border-gray-300 w-full" value="@item.Name" @onchange="@((e) => ChangeItemName(item, e.Value?.ToString() ?? ""))" />
+          </label>
+          <label>
+            <span class="text-sm uppercase mb-1 font-bold block"><i class="fas fa-align-left mr-2"></i>Description</span>
+            <input class="text-sm text-gray-500 border p-2 rounded-md border-gray-300 w-full" value="@item.Description" @onchange="@((e) => ChangeItemDescription(item, e.Value?.ToString() ?? ""))" />
+          </label>
+          <div class="grid grid-cols-1 gap-2">
+            @* Subitems *@
+            @foreach (var subItem in item.SubItems)
+            {
+              <div class="grid grid-cols-1 gap-2 border border-gray-300 rounded-md p-2">
+                <button class="w-fit text-red-700 uppercase font-bold justify-self-end text-sm"
+                  @onclick="@(() => RemoveSubItem(item, subItem))">
+                  <i class="fas fa-trash-alt mr-2"></i>Remove @subItem.Name
+                </button>
+                <span class="text-sm flex flex-col gap-2">
+                  <span class="w-full flex flex-row items-center gap-2 border border-gray-300 rounded-md">
+                    <input class="text-sm w-full p-2" value="@subItem.Name" @onchange="@((e) => ChangeSubItemName(subItem, e.Value?.ToString() ?? ""))" />
+                    <span class="text-[10px] uppercase font-bold w-24 text-center shrink-0 bg-gray-300 py-2 px-4 self-stretch flex items-center justify-center"><i class="fas fa-tag mr-2"></i>Name</span>
+                  </span>
+                  <span class="w-full flex flex-row items-center gap-2 border border-gray-300 rounded-md">
+                    <input class="text-sm w-full p-2" value="@subItem.Price" @onchange="@((e) => ChangeSubItemPrice(subItem, double.Parse(e.Value?.ToString() ?? "0")))"  />
+                    <span class="text-[10px] uppercase font-bold w-24 text-center shrink-0 bg-gray-300 py-2 px-4 self-stretch flex items-center justify-center"><i class="fas fa-euro-sign mr-2"></i>Price</span>
+                  </span>
+                  <span class="w-full flex flex-row items-center gap-2 border border-gray-300 rounded-md">
+                    <input class="text-sm w-full p-2" value="@subItem.Weight" @onchange="@((e) => ChangeSubItemWeight(subItem, double.Parse(e.Value?.ToString() ?? "0")))" />
+                    <span class="text-[10px] uppercase font-bold w-24 text-center shrink-0 bg-gray-300 py-2 px-4 self-stretch flex items-center justify-center"><i class="fas fa-weight-hanging mr-2"></i>Weight</span>
+                  </span>
+                </span>
+              </div>
+            }
+            <button class="w-fit text-green-700 uppercase font-bold"
+              @onclick="@(() => AddSubItem(item))">
+              <i class="fas fa-plus mr-2"></i>Add SubItem
+            </button>
+          </div>
+          <button class="w-fit justify-self-end rounded-md bg-red-500 px-4 py-2 text-white"
+            @onclick="@(() => RemoveItem(item))">
+            <i class="fas fa-trash-alt mr-2"></i>Remove @item.Name
+          </button>
+        </div>
+      }
+    </div>
+    <button class="ml-auto rounded-md bg-blue-500 px-4 py-2 text-white" @onclick="AddItem">
+      <i class="fas fa-plus mr-2"></i>Add Item
+    </button>
+  </div>
+</div>

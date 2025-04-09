@@ -1,26 +1,37 @@
 {
-    "name": "blazor-test-project",
-    "version": "1.0.0",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "start": "dotnet run --project BlazorApp/BlazorApp.csproj",
-        "prepare": "husky install",
-        "format": "bunx prettier --write \"**/*.{json,js,css,html}\"",
-        "format:check": "bunx prettier --check \"**/*.{json,js,css,html}\"",
-        "commit": "git-cz"
-    },
-    "devDependencies": {
-        "@commitlint/cli": "^18.4.3",
-        "@commitlint/config-conventional": "^18.4.3",
-        "husky": "^8.0.3",
-        "prettier": "^3.2.5",
-        "commitizen": "^4.3.0",
-        "cz-conventional-changelog": "^3.3.0"
-    },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
+  "name": "blazor-test-project",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "concurrently \"dotnet watch --project BlazorApp/BlazorApp.csproj\" \"bun css:watch\"",
+    "prepare": "husky install",
+    "format": "bunx prettier --write \"**/*.{razor,cs,js,json,html,css}\"",
+    "format:check": "bunx prettier --check \"**/*.{razor,cs,js,json,html,css}\"",
+    "commit": "git-cz",
+    "css:build": "bunx tailwindcss -i ./BlazorApp/wwwroot/css/tailwind.css -o ./BlazorApp/wwwroot/css/tailwind-output.min.css",
+    "css:watch": "bunx tailwindcss -i ./BlazorApp/wwwroot/css/tailwind.css -o ./BlazorApp/wwwroot/css/tailwind-output.min.css --watch"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "autoprefixer": "^10.4.17",
+    "commitizen": "^4.3.0",
+    "concurrently": "^8.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
+    "postcss": "^8.5.3",
+    "prettier": "3.5.3",
+    "prettier-plugin-razor": "^1.0.11",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.1.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.3"
+  }
 }
